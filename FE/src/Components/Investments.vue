@@ -3,12 +3,13 @@
         <h2>Investments</h2>
         <!--TODO: To make a cool layout  -->
         <!--TODO: To make it dynamic  -->
-
+        <!--* remember to add working capital-->
         <p>
             Description
             <input type="text" v-model="invest1.description" />
             Value
             <input type="text" v-model.number="invest1.price" @input="sum" />
+            * remember to add working capital
         </p>
         <p>
             Description
@@ -32,7 +33,6 @@
 <script>
 export default {
     name: "investments",
-
     data() {
         return {
             invest1: { description: '', price: 0},
@@ -44,7 +44,7 @@ export default {
     methods: {
         sum(){
             this.total = (this.invest1.price) + (this.invest2.price) + (this.invest3.price)
-//            this.total = parseFloat(this.invest1.price) + parseFloat(this.invest2.price) + parseFloat(this.invest3.price)
+            this.$emit('total_investments_change',this.total);
         }
     }
 }

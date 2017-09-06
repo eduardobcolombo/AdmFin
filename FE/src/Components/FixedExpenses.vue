@@ -44,6 +44,7 @@ export default {
     methods: {
         sum(){
             this.total = (this.fixedExpense1.price) + (this.fixedExpense2.price) + (this.fixedExpense3.price)
+            this.$emit('total_fixedExpenses_change',this.total);
         }
     }
 }

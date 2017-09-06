@@ -44,6 +44,7 @@ export default {
     methods: {
         sum(){
             this.totalAquisitionCost = (this.aquisition_cost1.incidence) + (this.aquisition_cost2.incidence) + (this.aquisition_cost3.incidence)
+            this.$emit('total_acquisitionCost_change',this.totalAquisitionCost);
         }
     }
 }
