@@ -44,7 +44,6 @@ export default {
     methods: {
         sum(){
             this.total = (this.fixedExpense1.price) + (this.fixedExpense2.price) + (this.fixedExpense3.price)
-//            this.total = parseFloat(this.fixedExpense1.price) + parseFloat(this.fixedExpense2.price) + parseFloat(this.fixedExpense3.price)
         }
     }
 }

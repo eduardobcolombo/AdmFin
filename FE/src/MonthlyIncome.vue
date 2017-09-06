@@ -59,7 +59,6 @@ export default {
         sum(){
             this.totalIncome = (this.product1.price * this.product1.amount) + (this.product2.price * this.product2.amount) + (this.product3.price * this.product3.amount)
             this.totalCost = (this.product1.cost * this.product1.amount) + (this.product2.cost * this.product2.amount) + (this.product3.cost * this.product3.amount)
-//            this.total = parseFloat(this.invest1.price) + parseFloat(this.invest2.price) + parseFloat(this.invest3.price)
         }
     }
 }

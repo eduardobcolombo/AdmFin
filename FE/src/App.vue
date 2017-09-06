@@ -8,6 +8,8 @@
     <hr />
     <app-monthlyIncome></app-monthlyIncome>
     <hr />
+    <app-acquisitionCost></app-acquisitionCost>
+    <hr />
 
 
   </div>
