@@ -1,26 +1,26 @@
 <template>
-    <div id="investments">
+    <div id="fixedExpenses">
         <h2>Fixed Expenses</h2>
         <!--TODO: To make a cool layout  -->
         <!--TODO: To make it dynamic  -->
 
         <p>
             Description
-            <input type="text" v-model="invest1.description" />
+            <input type="text" v-model="fixedExpense1.description" />
             Value
-            <input type="text" v-model.number="invest1.price" @input="sum" />
+            <input type="text" v-model.number="fixedExpense1.price" @input="sum" />
         </p>
         <p>
             Description
-            <input type="text" v-model="invest2.description" />
+            <input type="text" v-model="fixedExpense2.description" />
             Value
-            <input type="text" v-model.number="invest2.price" @input="sum"/>
+            <input type="text" v-model.number="fixedExpense2.price" @input="sum"/>
         </p>
         <p>
             Description
-            <input type="text" v-model="invest3.description" />
+            <input type="text" v-model="fixedExpense3.description" />
             Value
-            <input type="text" v-model.number="invest3.price" @input="sum"/>
+            <input type="text" v-model.number="fixedExpense3.price" @input="sum"/>
         </p>
 
         <h3>Total of fixed expenses {{ total }}</h3>
@@ -31,20 +31,20 @@
 
 <script>
 export default {
-    name: "investments",
+    name: "fixedExpenses",
 
     data() {
         return {
-            invest1: { description: '', price: 0},
-            invest2: { description: '', price: 0},
-            invest3: { description: '', price: 0},
+            fixedExpense1: { description: '', price: 0},
+            fixedExpense2: { description: '', price: 0},
+            fixedExpense3: { description: '', price: 0},
             total: 0
         }
     },
     methods: {
         sum(){
-            this.total = (this.invest1.price) + (this.invest2.price) + (this.invest3.price)
-//            this.total = parseFloat(this.invest1.price) + parseFloat(this.invest2.price) + parseFloat(this.invest3.price)
+            this.total = (this.fixedExpense1.price) + (this.fixedExpense2.price) + (this.fixedExpense3.price)
+//            this.total = parseFloat(this.fixedExpense1.price) + parseFloat(this.fixedExpense2.price) + parseFloat(this.fixedExpense3.price)
         }
     }
 }
