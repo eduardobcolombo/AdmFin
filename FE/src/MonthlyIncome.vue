@@ -9,6 +9,8 @@
             <input type="text" v-model="product1.description" />
             Amount
             <input type="text" v-model.number="product1.amount" @input="sum" />
+            Cost Unit
+            <input type="text" v-model.number="product1.cost" @input="sum" />
             Unit Value
             <input type="text" v-model.number="product1.price" @input="sum" />
         </p>
@@ -17,6 +19,8 @@
             <input type="text" v-model="product2.description" />
             Amount
             <input type="text" v-model.number="product2.amount" @input="sum" />
+            Cost Unit
+            <input type="text" v-model.number="product2.cost" @input="sum" />
             Unit Value
             <input type="text" v-model.number="product2.price" @input="sum" />
         </p>
@@ -25,12 +29,14 @@
             <input type="text" v-model="product3.description" />
             Amount
             <input type="text" v-model.number="product3.amount" @input="sum" />
+            Cost Unit
+            <input type="text" v-model.number="product3.cost" @input="sum" />
             Unit Value
             <input type="text" v-model.number="product3.price" @input="sum" />
         </p>
 
-
-        <h3>Total of montly income {{ total }}</h3>
+        <h3>Total of montly cost {{ totalCost }}</h3>
+        <h3>Total of montly income {{ totalIncome }}</h3>
 
     </div>
 </template>
@@ -42,15 +48,17 @@ export default {
 
     data() {
         return {
-            product1: { description: '', amount: 0, price: 0},
-            product2: { description: '', amount: 0, price: 0},
-            product3: { description: '', amount: 0, price: 0},
-            total: 0
+            product1: { description: '', amount: 0, cost: 0, price: 0},
+            product2: { description: '', amount: 0, cost: 0, price: 0},
+            product3: { description: '', amount: 0, cost: 0, price: 0},
+            totalCost: 0,
+            totalIncome: 0
         }
     },
     methods: {
         sum(){
-            this.total = (this.product1.price * this.product1.amount) + (this.product2.price * this.product2.amount) + (this.product3.price * this.product3.amount)
+            this.totalIncome = (this.product1.price * this.product1.amount) + (this.product2.price * this.product2.amount) + (this.product3.price * this.product3.amount)
+            this.totalCost = (this.product1.cost * this.product1.amount) + (this.product2.cost * this.product2.amount) + (this.product3.cost * this.product3.amount)
 //            this.total = parseFloat(this.invest1.price) + parseFloat(this.invest2.price) + parseFloat(this.invest3.price)
         }
     }
