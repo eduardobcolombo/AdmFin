@@ -1,11 +1,7 @@
 <template>
   <div id="app">
     <h1>{{ msg }}</h1>
-    <br />total_investments: {{ total.investments }}
-    <br />total_fixedExpenses: {{ total.fixedExpenses }}
-    <br />total_montlyCost: {{ total.montlyCost }}
-    <br />total_montlyIncome: {{ total.montlyIncome }}
-    <br />total_acquisitionCost: {{ total.acquisitionCost }}
+
 
     <app-investments @total_investments_change="total.investments = $event"></app-investments>
     <hr />
