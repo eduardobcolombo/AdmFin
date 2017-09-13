@@ -6,24 +6,20 @@
 
         <p>
             Description
-            <input type="text" v-model="fixedExpense1.description" />
+            <input type="text" v-model="fixedExpense.description" />
             Value
-            <input type="text" v-model.number="fixedExpense1.price" @input="sum" />
-        </p>
-        <p>
-            Description
-            <input type="text" v-model="fixedExpense2.description" />
-            Value
-            <input type="text" v-model.number="fixedExpense2.price" @input="sum"/>
-        </p>
-        <p>
-            Description
-            <input type="text" v-model="fixedExpense3.description" />
-            Value
-            <input type="text" v-model.number="fixedExpense3.price" @input="sum"/>
-        </p>
+            <input type="text" v-model.number="fixedExpense.price" />
 
-        <h3>Total of fixed expenses {{ total }}</h3>
+            <input type="button" value="Add" v-on:click="sum" />
+        </p>
+         <ul id="fixedExpenses-ul">
+            <li v-for="fixExp in total_fixedExpenses.list_fixedExpenses">
+                {{ fixExp.price | currency 'R$' }} - {{fixExp.description}}
+            </li>
+        </ul>
+
+
+        <h3>Total of fixed expenses {{ total_fixedExpenses.total }}</h3>
 
     </div>
 </template>
@@ -35,16 +31,17 @@ export default {
 
     data() {
         return {
-            fixedExpense1: { description: '', price: 0},
-            fixedExpense2: { description: '', price: 0},
-            fixedExpense3: { description: '', price: 0},
-            total: 0
+            fixedExpense: { description: '', price: 0},
+            total_fixedExpenses: { total:0 , list_fixedExpenses: [] }
         }
     },
     methods: {
         sum(){
-            this.total = (this.fixedExpense1.price) + (this.fixedExpense2.price) + (this.fixedExpense3.price)
-            this.$emit('total_fixedExpenses_change',this.total);
+            this.total_fixedExpenses.total = this.total_fixedExpenses.total + this.fixedExpense.price;
+            this.total_fixedExpenses.list_fixedExpenses.push(this.fixedExpense);
+            this.fixedExpense = {};
+
+            this.$emit('total_fixedExpenses_change',this.total_fixedExpenses);
         }
     }
 }

@@ -6,37 +6,25 @@
 
         <p>
             Product
-            <input type="text" v-model="product1.description" />
+            <input type="text" v-model="product.description" />
             Amount
-            <input type="text" v-model.number="product1.amount" @input="sum" />
+            <input type="text" v-model.number="product.amount"  />
             Cost Unit
-            <input type="text" v-model.number="product1.cost" @input="sum" />
+            <input type="text" v-model.number="product.cost"  />
             Unit Value
-            <input type="text" v-model.number="product1.price" @input="sum" />
-        </p>
-        <p>
-            Product
-            <input type="text" v-model="product2.description" />
-            Amount
-            <input type="text" v-model.number="product2.amount" @input="sum" />
-            Cost Unit
-            <input type="text" v-model.number="product2.cost" @input="sum" />
-            Unit Value
-            <input type="text" v-model.number="product2.price" @input="sum" />
-        </p>
-        <p>
-            Product
-            <input type="text" v-model="product3.description" />
-            Amount
-            <input type="text" v-model.number="product3.amount" @input="sum" />
-            Cost Unit
-            <input type="text" v-model.number="product3.cost" @input="sum" />
-            Unit Value
-            <input type="text" v-model.number="product3.price" @input="sum" />
+            <input type="text" v-model.number="product.price"  />
+
+            <input type="button" value="Add" v-on:click="sum" />
         </p>
 
-        <h3>Total of montly cost {{ totalCost }}</h3>
-        <h3>Total of montly income {{ totalIncome }}</h3>
+         <ul id="products-ul">
+            <li v-for="prod in total_montly.list_products">
+                {{ prod.price | currency 'R$' }} - {{prod.description}}
+            </li>
+        </ul>
+
+        <h3>Total of montly cost {{ total_montly.totalCost }}</h3>
+        <h3>Total of montly income {{ total_montly.totalIncome }}</h3>
 
     </div>
 </template>
@@ -48,19 +36,16 @@ export default {
 
     data() {
         return {
-            product1: { description: '', amount: 0, cost: 0, price: 0},
-            product2: { description: '', amount: 0, cost: 0, price: 0},
-            product3: { description: '', amount: 0, cost: 0, price: 0},
-            totalCost: 0,
-            totalIncome: 0
+            product: { description: '', amount: 0, cost: 0, price: 0},
+            total_montly:{totalCost: 0,totalIncome: 0, list_products:[]}
         }
     },
     methods: {
         sum(){
-            this.totalIncome = (this.product1.price * this.product1.amount) + (this.product2.price * this.product2.amount) + (this.product3.price * this.product3.amount)
-            this.$emit('total_montlyIncome_change',this.totalIncome);
-            this.totalCost = (this.product1.cost * this.product1.amount) + (this.product2.cost * this.product2.amount) + (this.product3.cost * this.product3.amount)
-            this.$emit('total_montlyCost_change',this.totalCost);
+            this.total_montly.totalIncome = this.total_montly.totalIncome + (this.product.price * this.product.amount);
+            this.total_montly.totalCost = this.total_montly.totalCost + (this.product.cost * this.product.amount);
+            this.product = {};
+            this.$emit('total_montly_change',this.total_montly);
         }
     }
 }

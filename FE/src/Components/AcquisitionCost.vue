@@ -6,24 +6,20 @@
 
         <p>
             Description
-            <input type="text" v-model="aquisition_cost1.description" />
+            <input type="text" v-model="aquisition_cost.description" />
             % incidence on sales
-            <input type="text" v-model.number="aquisition_cost1.incidence" @input="sum" />
-        </p>
-        <p>
-            Description
-            <input type="text" v-model="aquisition_cost2.description" />
-            % incidence on sales
-            <input type="text" v-model.number="aquisition_cost2.incidence" @input="sum" />
-        </p>
-        <p>
-            Description
-            <input type="text" v-model="aquisition_cost3.description" />
-            % incidence on sales
-            <input type="text" v-model.number="aquisition_cost3.incidence" @input="sum" />
+            <input type="text" v-model.number="aquisition_cost.incidence" />
+
+            <input type="button" value="Add" v-on:click="sum" />
         </p>
 
-        <h3>Total of aquisition cost {{ totalAquisitionCost }} %</h3>
+        <ul id="aquisition-ul">
+            <li v-for="aqCost in total_aquisitionCost.list_aquisition">
+                {{ aqCost.incidence | currency 'R$' }} - {{aqCost.description}}
+            </li>
+        </ul>
+
+        <h3>Total of aquisition cost {{ total_aquisitionCost.total }} %</h3>
 
     </div>
 </template>
@@ -35,16 +31,16 @@ export default {
 
     data() {
         return {
-            aquisition_cost1: { description: '', incidence: 0},
-            aquisition_cost2: { description: '', incidence: 0},
-            aquisition_cost3: { description: '', incidence: 0},
-            totalAquisitionCost: 0
+            aquisition_cost: { description: '', incidence: 0},
+            total_aquisitionCost: { total:0 , list_aquisition: [] }
         }
     },
     methods: {
         sum(){
-            this.totalAquisitionCost = (this.aquisition_cost1.incidence) + (this.aquisition_cost2.incidence) + (this.aquisition_cost3.incidence)
-            this.$emit('total_acquisitionCost_change',this.totalAquisitionCost);
+            this.total_aquisitionCost.total = this.total_aquisitionCost.total + this.aquisition_cost.incidence;
+            this.total_aquisitionCost.list_aquisition.push(this.aquisition_cost);
+            this.aquisition_cost = {};
+            this.$emit('total_acquisitionCost_change',this.total_aquisitionCost);
         }
     }
 }

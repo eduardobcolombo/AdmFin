@@ -6,25 +6,22 @@
         <!--* remember to add working capital-->
         <p>
             Description
-            <input type="text" v-model="invest1.description" />
+            <input type="text" v-model="invest.description" />
             Value
-            <input type="text" v-model.number="invest1.price" @input="sum" />
+            <input type="text" v-model.number="invest.price" />
+            <input type="button" value="Add" v-on:click="sum" />
+        </p>
+        <p>
             * remember to add working capital
         </p>
-        <p>
-            Description
-            <input type="text" v-model="invest2.description" />
-            Value
-            <input type="text" v-model.number="invest2.price" @input="sum"/>
-        </p>
-        <p>
-            Description
-            <input type="text" v-model="invest3.description" />
-            Value
-            <input type="text" v-model.number="invest3.price" @input="sum"/>
-        </p>
+        <ul id="investments-ul">
+            <li v-for="inv in total_investments.list_investments">
+                {{ inv.price | currency 'R$' }} - {{inv.description}}
+            </li>
+        </ul>
 
-        <h3>Total of investments {{ total }}</h3>
+        <h3>Total of investments {{ total_investments.total }}</h3>
+
 
     </div>
 </template>
@@ -35,16 +32,17 @@ export default {
     name: "investments",
     data() {
         return {
-            invest1: { description: '', price: 0},
-            invest2: { description: '', price: 0},
-            invest3: { description: '', price: 0},
-            total: 0
+            invest: { description: '', price: 0},
+            total_investments: { total:0 , list_investments: [] }
         }
     },
     methods: {
         sum(){
-            this.total = (this.invest1.price) + (this.invest2.price) + (this.invest3.price)
-            this.$emit('total_investments_change',this.total);
+            this.total_investments.total = this.total_investments.total + this.invest.price;
+            this.total_investments.list_investments.push(this.invest);
+            this.invest = {};
+
+            this.$emit('total_investments_change',this.total_investments);
         }
     }
 }
