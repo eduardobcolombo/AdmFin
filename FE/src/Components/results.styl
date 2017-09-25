@@ -1,0 +1,44 @@
+ol.results, ul.economicIndex
+  margin-left: 0
+  padding-left: 0
+  > li
+    background: $grey.lighten-4
+    border-top: 2px solid $theme.primary
+    list-style: none
+    margin: 0 0 6px 2em
+    padding: 4px 8px
+    position: relative
+
+ul.economicIndex > li
+  background: $teal.lighten-4
+  border-top-color: $teal.base
+  margin-left: 0
+
+ol.results
+  counter-reset: li
+  > li:before
+    background: $theme.primary
+    border-top: 2px solid $theme.primary
+    box-sizing: border-box
+    color: #fff
+    content: counter(li)
+    counter-increment: li
+    font-weight: bold
+    left: -2em
+    margin-right: 8px
+    padding: 4px
+    position: absolute
+    text-align: center
+    top: -2px
+    width: 2em
+  ol.results li:last-child
+    margin-bottom: 0
+
+li
+  ol.results, ul
+    margin-top: 6px
+  ol.results
+    counter-reset: nested-ol-li
+    > li:before
+      content: counter(li) "." counter(nested-ol-li)
+      counter-increment: nested-ol-li

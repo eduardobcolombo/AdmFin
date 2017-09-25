@@ -1,0 +1,64 @@
+{
+  "en": {
+    "msg": "Make sure is good idea buy or create a business!",
+    "steps": {
+      "investments": "Investments",
+      "fixed_expenses": "Fixed expenses",
+      "monthly_income": "Monthly income",
+      "acquisition_cost": "Acquisition cost",
+      "results": "Results"
+    },
+    "next": "Next",
+    "previous": "Previous",
+    "remember_to_add_working_capital": "Remember to add working capital",
+    "label": {
+      "description": "Description",
+      "value": "Value",
+      "amount": "Amount",
+      "cost": "Cost unit",
+      "price": "Unit value",
+      "incidence": "% incidence on sales"
+    },
+    "table": {
+      "no_data_available": "No data available",
+      "footer": {
+        "total_of_investments": "Total of investments",
+        "total_of_fixed_expenses": "Total of fixed expenses",
+        "total_of_monthly_cost": "Total of monthly cost",
+        "total_of_monthly_income": "Total of monthly income",
+        "total_of_acquisition_cost": "Total of acquisition cost"
+      }
+    }
+  },
+  "pt-BR": {
+    "msg": "Certifique-se de que é uma boa idéia comprar ou começar um negócio!",
+    "steps": {
+      "investments": "Investimentos",
+      "fixed_expenses": "Despesas fixas",
+      "monthly_income": "Renda mensal",
+      "acquisition_cost": "Custo de aquisição",
+      "results": "Resultados"
+    },
+    "next": "Próximo",
+    "previous": "Anterior",
+    "remember_to_add_working_capital": "Lembre-se de adicionar o capital de giro",
+    "label": {
+      "description": "Descrição",
+      "value": "Valor",
+      "amount": "Quantidade",
+      "cost": "Custo unitário",
+      "price": "Valor unitário",
+      "incidence": "% de incidência nas vendas"
+    },
+    "table": {
+      "no_data_available": "Não há dados disponíveis",
+      "footer": {
+        "total_of_investments": "Total de investimentos",
+        "total_of_fixed_expenses": "Total de despesas fixas",
+        "total_of_monthly_cost": "Total do custo mensal",
+        "total_of_monthly_income": "Total da renda mensal",
+        "total_of_acquisition_cost": "Total do custo de aquisição"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "en": {
+    "currency": {
+      "style": "currency",
+      "currency": "USD"
+    },
+    "decimal": {
+      "style": "decimal"
+    },
+    "percent": {
+      "style": "percent"
+    }
+  },
+  "pt-BR": {
+    "currency": {
+      "style": "currency",
+      "currency": "BRL"
+    },
+    "decimal": {
+      "style": "decimal"
+    },
+    "percent": {
+      "style": "percent"
+    }
+  }
+}

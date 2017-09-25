@@ -1,111 +1,129 @@
 <template>
-    <div id="results">
-        <h2>Results</h2>
-        <!--TODO: To make a cool layout  -->
-        <!--TODO: translate much better  -->
-        <!--TODO: To organize repeted calcs on variables -->
-        <button @click="load">Load</button>
-        <p>
-            1. - Montly Income
-            R$ {{ results.montlyIncome }}
-        </p>
-        <p>
-            2. - Float Cost
-            R$ {{ results.floatCost }}
-        </p>
-        <p>
-            2.1 - Cost of produts
-            R$ {{ results.costProducts }}
-        </p>
-        <p>
-            2.2 - Acquisition Cost (impostos, comissões, ...)
-            R$ {{ results.acquisitionCost }}
-            {{ total.acquisitionCost }} %
-        </p>
-        <p>
-            3 - Contribution margin
-            R$ {{ results.contributionMargin }}
+  <div class="pl-1 pr-1" id="results">
+    <!--TODO: translate much better  -->
 
-        </p>
-        <p>
-            4 - Fixed expenses
-            R$ {{ results.fixedExpenses }}
-        </p>
-        <p>
-            5 - Operational result
-            R$ {{ results.operationalResult  }}
-        </p>
-        <p>
-            7 - Net profit
-            R$ {{ results.netProfit }}
-        </p>
-        <p>
-            8 - Break-even point
-            R$ {{ results.breakEvenPoint }}
-        </p>
-
-
-
-<br />Margem de Contribuição (%) {{ economic_index.contributionMargin }}
-<br />Lucratividade das vendas (%) {{ economic_index.salesProfitability }}
-<br />Ponto de Equilibrio (R$) {{ economic_index.breakEvenPoint }}
-<br />Rentabilidade do Projeto (% a.m.) {{ economic_index.projectProfitabilityMonth }}
-<br />Rentabilidade do Projeto (% a.a.) {{ economic_index.projectProfitabilityYear }}
-<br />Prazo Retorno Investimento (N° meses) {{ economic_index.termReturnInvestment }}
-
-    </div>
+    <v-layout row wrap>
+      <v-flex sm12 md12 lg12 xl6 mb-4 xl-pr-2>
+        <ol class="results">
+          <li>
+            Monthly income
+            <strong class="right">{{ $n(results.monthlyIncome, 'currency') }}</strong>
+          </li>
+          <li>
+            Float cost
+            <strong class="right">{{ $n(results.floatCost, 'currency') }}</strong>
+            <ol class="results">
+              <li>
+                Cost of produts
+                <span class="right">{{ $n(results.costProducts, 'currency') }}</span>
+              </li>
+              <li>
+                Acquisition cost (impostos, comissões, ...)
+                <span class="right">
+                  ({{ $n(results.percentAcquisitionCost, 'percent') }})
+                  {{ $n(results.acquisitionCost, 'currency') }}
+                </span>
+              </li>
+            </ol>
+          </li>
+          <li>
+            Contribution margin
+            <strong class="right">{{ $n(results.contributionMargin, 'currency') }}</strong>
+          </li>
+          <li>
+            Fixed expenses
+            <strong class="right">{{ $n(results.fixedExpenses, 'currency') }}</strong>
+          </li>
+          <li>
+            Operational result
+            <strong class="right">{{ $n(results.operationalResult, 'currency')  }}</strong>
+          </li>
+          <li>
+            Net profit
+            <strong class="right"> {{ $n(results.netProfit, 'currency') }}</strong>
+          </li>
+          <li>
+            Break-even point
+            <strong class="right">{{ $n(results.breakEvenPoint, 'currency') }}</strong>
+          </li>
+        </ol>
+      </v-flex>
+      <v-flex sm12 md12 lg12 xl6 xl-pr-2>
+        <ul class="economicIndex">
+          <li>
+            Margem de contribuição
+            <strong class="right">{{ $n(economicIndex.contributionMargin, 'percent') }}</strong>
+          </li>
+          <li>
+            Lucratividade das vendas
+            <strong class="right">{{ $n(economicIndex.salesProfitability, 'percent') }}</strong>
+          </li>
+          <li>
+            Ponto de equilíbrio
+            <strong class="right">{{ $n(economicIndex.breakEvenPoint, 'currency') }}</strong>
+          </li>
+          <li>
+            Rentabilidade do projeto (a.m.)
+            <strong class="right">{{ $n(economicIndex.projectProfitabilityMonth, 'percent') }}</strong>
+          </li>
+          <li>
+            Rentabilidade do projeto (a.a.)
+            <strong class="right">{{ $n(economicIndex.projectProfitabilityYear, 'percent') }}</strong>
+          </li>
+          <li>
+            Prazo de retorno do investimento (n° meses)
+            <strong class="right">{{ $n(economicIndex.termReturnInvestment, 'decimal') }}</strong>
+          </li>
+        </ul>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 
+<style lang="stylus">
+@require './results'
+</style>
 
 <script>
-export default {
-    name: "results",
+  export default {
+    name: 'app-results',
     props: ['total'],
-    data() {
-        return {
-            results: {
-                investments: 0,
-                montlyIncome: 0,
-                floatCost: 0,
-                costProducts: 0,
-                acquisitionCost: 0,
-                contributionMargin: 0,
-                fixedExpenses: 0,
-                operationalResult: 0,
-                netProfit: 0,
-                breakEvenPoint: 0
-            },
-            economic_index: {
-                contributionMargin: 0,
-                salesProfitability: 0,
-                breakEvenPoint: 0,
-                projectProfitabilityMonth: 0,
-                projectProfitabilityYear: 0,
-                termReturnInvestment: 0,
-            }
+    data: () => ({
+      economicIndex: {
+        contributionMargin: 0,
+        salesProfitability: 0,
+        breakEvenPoint: 0,
+        projectProfitabilityMonth: 0,
+        projectProfitabilityYear: 0,
+        termReturnInvestment: 0
+      }
+    }),
+    computed: {
+      results () {
+        let values = {
+          investments: this.total.investments,
+          monthlyIncome: this.total.monthlyIncome,
+          percentAcquisitionCost: this.total.acquisitionCost,
+          acquisitionCost: this.total.monthlyIncome * (this.total.acquisitionCost / 100),
+          costProducts: this.total.monthlyCost,
+          fixedExpenses: this.total.fixedExpenses
         }
-    },
-    methods: {
-        load() {
-            this.results.investments = this.total.investments
-            this.results.montlyIncome = this.total.montlyIncome
-            this.results.floatCost = this.total.montlyCost + this.total.montlyIncome * (this.total.acquisitionCost / 100)
-            this.results.costProducts = this.total.montlyCost
-            this.results.acquisitionCost = this.total.montlyIncome * (this.total.acquisitionCost / 100)
-            this.results.contributionMargin = this.total.montlyIncome - (this.total.montlyCost + this.total.montlyIncome * (this.total.acquisitionCost / 100))
-            this.results.fixedExpenses = this.total.fixedExpenses
-            this.results.operationalResult = this.total.montlyIncome - (this.total.montlyCost + this.total.montlyIncome * (this.total.acquisitionCost / 100)) - this.total.fixedExpenses
-            this.results.netProfit = this.total.montlyIncome - (this.total.montlyCost + this.total.montlyIncome * (this.total.acquisitionCost / 100)) - this.total.fixedExpenses
-            this.results.breakEvenPoint = this.total.fixedExpenses / ((this.total.montlyIncome - (this.total.montlyCost + this.total.montlyIncome * (this.total.acquisitionCost / 100))) / this.total.montlyIncome)
 
-            this.economic_index.contributionMargin = this.results.contributionMargin / this.results.montlyIncome
-            this.economic_index.salesProfitability =  this.results.netProfit/ this.results.montlyIncome
-            this.economic_index.breakEvenPoint = this.results.fixedExpenses / this.results.contributionMargin
-            this.economic_index.projectProfitabilityMonth = this.results.netProfit / this.results.investments
-            this.economic_index.projectProfitabilityYear = this.economic_index.projectProfitabilityMonth * 12
-            this.economic_index.termReturnInvestment = this.results.investments / this.results.netProfit
-        }
+        values.floatCost = this.total.monthlyCost + values.acquisitionCost
+        values.contributionMargin = this.total.monthlyIncome - values.floatCost
+        values.operationalResult = this.total.monthlyIncome - values.floatCost - this.total.fixedExpenses
+        values.netProfit = this.total.monthlyIncome - values.floatCost - this.total.fixedExpenses
+        values.breakEvenPoint = this.total.fixedExpenses / (values.contributionMargin / this.total.monthlyIncome)
+
+        this.economicIndex.contributionMargin = values.contributionMargin / values.monthlyIncome
+        this.economicIndex.salesProfitability = values.netProfit / values.monthlyIncome
+        this.economicIndex.breakEvenPoint = values.fixedExpenses / values.contributionMargin
+        this.economicIndex.projectProfitabilityMonth = values.netProfit / values.investments
+        this.economicIndex.projectProfitabilityYear = this.economicIndex.projectProfitabilityMonth * 12
+        this.economicIndex.termReturnInvestment = values.investments / values.netProfit
+
+        return values
+      }
     }
-}
-
+  }
 </script>
