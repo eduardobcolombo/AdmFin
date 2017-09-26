@@ -124,80 +124,81 @@
 </template>
 
 <script>
-  const uuidv4 = require('uuid/v4')
+const uuidv4 = require('uuid/v4')
 
-  export default {
-    name: 'app-monthlyIncome',
-    $validates: true,
-    data: () => ({
-      selected: [],
-      headers: [
-        {
-          text: 'label.description',
-          align: 'left',
-          sortable: false,
-          value: 'description'
-        },
-        {
-          text: 'label.amount',
-          sortable: false,
-          value: 'amount'
-        },
-        {
-          text: 'label.cost',
-          sortable: false,
-          value: 'cost'
-        },
-        {
-          text: 'label.price',
-          sortable: false,
-          value: 'price'
-        }
-      ],
-      product: {description: '', amount: 0, cost: 0, price: 0},
-      listProducts: []
-    }),
-    computed: {
-      totalMonthly () {
-        const value = this.listProducts.reduce((sum, o) => {
-          sum.totalCost = sum.totalCost + (o.cost * o.amount)
-          sum.totalIncome = sum.totalIncome + (o.price * o.amount)
-
-          return sum
-        }, {totalCost: 0, totalIncome: 0})
-
-        this.$emit('total_monthly_change', value)
-
-        return value
-      }
-    },
-    methods: {
-      remove () {
-        const ids = this.selected.map((o) => o.id)
-        this.listProducts = this.listProducts.filter((o) => !ids.includes(o.id))
+export default {
+  name: 'app-monthly-income',
+  $validates: true,
+  data: () => ({
+    selected: [],
+    headers: [
+      {
+        text: 'label.description',
+        align: 'left',
+        sortable: false,
+        value: 'description'
       },
-
-      toggleAll () {
-        if (this.selected.length) this.selected = []
-        else this.selected = this.listProducts.slice()
+      {
+        text: 'label.amount',
+        sortable: false,
+        value: 'amount'
       },
-
-      validateBeforeSubmit () {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.listProducts.push({
-              id: uuidv4(),
-              description: this.product.description,
-              amount: this.product.amount,
-              cost: this.product.cost,
-              price: this.product.price
-            })
-            this.product = {description: '', amount: 0, cost: 0, price: 0}
-            this.errors.clear()
-          }
-        })
+      {
+        text: 'label.cost',
+        sortable: false,
+        value: 'cost'
+      },
+      {
+        text: 'label.price',
+        sortable: false,
+        value: 'price'
       }
+    ],
+    product: {description: '', amount: 0, cost: 0, price: 0},
+    listProducts: []
+  }),
+  computed: {
+    totalMonthly () {
+      const value = this.listProducts.reduce((sum, o) => {
+        sum.totalCost = sum.totalCost + (o.cost * o.amount)
+        sum.totalIncome = sum.totalIncome + (o.price * o.amount)
 
+        return sum
+      }, {totalCost: 0, totalIncome: 0})
+
+      this.$emit('total_monthlyCost_change', value.totalCost)
+      this.$emit('total_monthlyIncome_change', value.totalIncome)
+
+      return value
     }
+  },
+  methods: {
+    remove () {
+      const ids = this.selected.map((o) => o.id)
+      this.listProducts = this.listProducts.filter((o) => !ids.includes(o.id))
+    },
+
+    toggleAll () {
+      if (this.selected.length) this.selected = []
+      else this.selected = this.listProducts.slice()
+    },
+
+    validateBeforeSubmit () {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.listProducts.push({
+            id: uuidv4(),
+            description: this.product.description,
+            amount: this.product.amount,
+            cost: this.product.cost,
+            price: this.product.price
+          })
+          this.product = {description: '', amount: 0, cost: 0, price: 0}
+          this.errors.clear()
+        }
+      })
+    }
+
   }
+}
 </script>

@@ -8,7 +8,8 @@
       "style": "decimal"
     },
     "percent": {
-      "style": "percent"
+      "style": "percent",
+      "minimumFractionDigits": 2
     }
   },
   "pt-BR": {
@@ -20,7 +21,8 @@
       "style": "decimal"
     },
     "percent": {
-      "style": "percent"
+      "style": "percent",
+      "minimumFractionDigits": 2
     }
   }
 }

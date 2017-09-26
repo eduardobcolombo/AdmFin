@@ -36,7 +36,7 @@
           </li>
           <li>
             Operational result
-            <strong class="right">{{ $n(results.operationalResult, 'currency')  }}</strong>
+            <strong class="right">{{ $n(results.operationalResult, 'currency') }}</strong>
           </li>
           <li>
             Net profit
@@ -80,50 +80,69 @@
   </div>
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 @require './results'
 </style>
 
 <script>
-  export default {
-    name: 'app-results',
-    props: ['total'],
-    data: () => ({
-      economicIndex: {
-        contributionMargin: 0,
-        salesProfitability: 0,
-        breakEvenPoint: 0,
-        projectProfitabilityMonth: 0,
-        projectProfitabilityYear: 0,
-        termReturnInvestment: 0
+export default {
+  name: 'app-results',
+  props: {
+    total: {
+      type: Object,
+      required: true,
+      default: () => ({
+        investments: 0,
+        fixedExpenses: 0,
+        monthlyCost: 0,
+        monthlyIncome: 0,
+        acquisitionCost: 0
+      })
+    }
+  },
+  data: () => ({
+    economicIndex: {
+      contributionMargin: 0,
+      salesProfitability: 0,
+      breakEvenPoint: 0,
+      projectProfitabilityMonth: 0,
+      projectProfitabilityYear: 0,
+      termReturnInvestment: 0
+    }
+  }),
+  computed: {
+    results () {
+      let values = {
+        investments: this.total.investments,
+        monthlyIncome: this.total.monthlyIncome,
+        percentAcquisitionCost: this.total.acquisitionCost,
+        acquisitionCost: this.total.monthlyIncome * (this.total.acquisitionCost / 100),
+        costProducts: this.total.monthlyCost,
+        fixedExpenses: this.total.fixedExpenses
       }
-    }),
-    computed: {
-      results () {
-        let values = {
-          investments: this.total.investments,
-          monthlyIncome: this.total.monthlyIncome,
-          percentAcquisitionCost: this.total.acquisitionCost,
-          acquisitionCost: this.total.monthlyIncome * (this.total.acquisitionCost / 100),
-          costProducts: this.total.monthlyCost,
-          fixedExpenses: this.total.fixedExpenses
-        }
 
-        values.floatCost = this.total.monthlyCost + values.acquisitionCost
-        values.contributionMargin = this.total.monthlyIncome - values.floatCost
-        values.operationalResult = this.total.monthlyIncome - values.floatCost - this.total.fixedExpenses
-        values.netProfit = this.total.monthlyIncome - values.floatCost - this.total.fixedExpenses
-        values.breakEvenPoint = this.total.fixedExpenses / (values.contributionMargin / this.total.monthlyIncome)
+      values.floatCost = this.total.monthlyCost + values.acquisitionCost
+      values.contributionMargin = this.total.monthlyIncome - values.floatCost
+      values.operationalResult = this.total.monthlyIncome - values.floatCost - this.total.fixedExpenses
+      values.netProfit = this.total.monthlyIncome - values.floatCost - this.total.fixedExpenses
+      values.breakEvenPoint = this.safeDivision(this.total.fixedExpenses / this.safeDivision(values.contributionMargin / this.total.monthlyIncome))
 
-        this.economicIndex.contributionMargin = values.contributionMargin / values.monthlyIncome
-        this.economicIndex.salesProfitability = values.netProfit / values.monthlyIncome
-        this.economicIndex.breakEvenPoint = values.fixedExpenses / values.contributionMargin
-        this.economicIndex.projectProfitabilityMonth = values.netProfit / values.investments
-        this.economicIndex.projectProfitabilityYear = this.economicIndex.projectProfitabilityMonth * 12
-        this.economicIndex.termReturnInvestment = values.investments / values.netProfit
+      this.economicIndex.contributionMargin = this.safeDivision(values.contributionMargin / values.monthlyIncome)
+      this.economicIndex.salesProfitability = this.safeDivision(values.netProfit / values.monthlyIncome)
+      this.economicIndex.breakEvenPoint = this.safeDivision(values.fixedExpenses / values.contributionMargin)
+      this.economicIndex.projectProfitabilityMonth = this.safeDivision(values.netProfit / values.investments)
+      this.economicIndex.projectProfitabilityYear = this.economicIndex.projectProfitabilityMonth * 12
+      this.economicIndex.termReturnInvestment = this.safeDivision(values.investments / values.netProfit)
 
-        return values
-      }
+      return values
+    }
+  },
+  methods: {
+    safeDivision (a, b) {
+      const r = a / b
+
+      return isFinite(r) && typeof r === 'number' ? r : 0
     }
   }
+}
 </script>

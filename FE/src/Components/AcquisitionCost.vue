@@ -89,61 +89,61 @@
 </template>
 
 <script>
-  const uuidv4 = require('uuid/v4')
+const uuidv4 = require('uuid/v4')
 
-  export default {
-    name: 'app-acquisitionCost',
-    $validates: true,
-    data: () => ({
-      selected: [],
-      headers: [
-        {
-          text: 'label.description',
-          align: 'left',
-          sortable: false,
-          value: 'description'
-        },
-        {
-          text: 'label.incidence',
-          sortable: false,
-          value: 'incidence'
-        }
-      ],
-      acquisitionCost: {description: '', incidence: 0},
-      listAcquisition: []
-    }),
-    computed: {
-      total () {
-        const value = this.listAcquisition.reduce((sum, o) => sum + o.incidence, 0)
-        this.$emit('total_acquisitionCost_change', value)
-
-        return value
+export default {
+  name: 'app-acquisition-cost',
+  $validates: true,
+  data: () => ({
+    selected: [],
+    headers: [
+      {
+        text: 'label.description',
+        align: 'left',
+        sortable: false,
+        value: 'description'
+      },
+      {
+        text: 'label.incidence',
+        sortable: false,
+        value: 'incidence'
       }
+    ],
+    acquisitionCost: {description: '', incidence: 0},
+    listAcquisition: []
+  }),
+  computed: {
+    total () {
+      const value = this.listAcquisition.reduce((sum, o) => sum + o.incidence, 0)
+      this.$emit('total_acquisitionCost_change', value)
+
+      return value
+    }
+  },
+  methods: {
+    remove () {
+      const ids = this.selected.map((o) => o.id)
+      this.listAcquisition = this.listAcquisition.filter((o) => !ids.includes(o.id))
     },
-    methods: {
-      remove () {
-        const ids = this.selected.map((o) => o.id)
-        this.listAcquisition = this.listAcquisition.filter((o) => !ids.includes(o.id))
-      },
 
-      toggleAll () {
-        if (this.selected.length) this.selected = []
-        else this.selected = this.listAcquisition.slice()
-      },
+    toggleAll () {
+      if (this.selected.length) this.selected = []
+      else this.selected = this.listAcquisition.slice()
+    },
 
-      validateBeforeSubmit () {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.listAcquisition.push({
-              id: uuidv4(),
-              description: this.acquisitionCost.description,
-              incidence: this.acquisitionCost.incidence
-            })
-            this.acquisitionCost = {description: '', incidence: 0}
-            this.errors.clear()
-          }
-        })
-      }
+    validateBeforeSubmit () {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.listAcquisition.push({
+            id: uuidv4(),
+            description: this.acquisitionCost.description,
+            incidence: this.acquisitionCost.incidence
+          })
+          this.acquisitionCost = {description: '', incidence: 0}
+          this.errors.clear()
+        }
+      })
     }
   }
+}
 </script>

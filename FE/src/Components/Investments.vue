@@ -93,62 +93,62 @@
 </template>
 
 <script>
-  const uuidv4 = require('uuid/v4')
+const uuidv4 = require('uuid/v4')
 
-  export default {
-    name: 'app-investments',
-    $validates: true,
-    data: () => ({
-      alert: true,
-      selected: [],
-      headers: [
-        {
-          text: 'label.description',
-          align: 'left',
-          sortable: false,
-          value: 'description'
-        },
-        {
-          text: 'label.value',
-          sortable: false,
-          value: 'price'
-        }
-      ],
-      invest: {description: 'Working capital', price: 0},
-      listInvestments: []
-    }),
-    computed: {
-      total () {
-        const value = this.listInvestments.reduce((sum, o) => sum + o.price, 0)
-        this.$emit('total_investments_change', value)
-
-        return value
+export default {
+  name: 'app-investments',
+  $validates: true,
+  data: () => ({
+    alert: true,
+    selected: [],
+    headers: [
+      {
+        text: 'label.description',
+        align: 'left',
+        sortable: false,
+        value: 'description'
+      },
+      {
+        text: 'label.value',
+        sortable: false,
+        value: 'price'
       }
+    ],
+    invest: {description: 'Working capital', price: 0},
+    listInvestments: []
+  }),
+  computed: {
+    total () {
+      const value = this.listInvestments.reduce((sum, o) => sum + o.price, 0)
+      this.$emit('total_investments_change', value)
+
+      return value
+    }
+  },
+  methods: {
+    remove () {
+      const ids = this.selected.map((o) => o.id)
+      this.listInvestments = this.listInvestments.filter((o) => !ids.includes(o.id))
     },
-    methods: {
-      remove () {
-        const ids = this.selected.map((o) => o.id)
-        this.listInvestments = this.listInvestments.filter((o) => !ids.includes(o.id))
-      },
 
-      toggleAll () {
-        if (this.selected.length) this.selected = []
-        else this.selected = this.listInvestments.slice()
-      },
+    toggleAll () {
+      if (this.selected.length) this.selected = []
+      else this.selected = this.listInvestments.slice()
+    },
 
-      validateBeforeSubmit () {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.listInvestments.push({
-              id: uuidv4(),
-              description: this.invest.description,
-              price: this.invest.price
-            })
-            this.invest = {description: '', price: 0}
-            this.errors.clear()
-          }
-        })
-      }
+    validateBeforeSubmit () {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.listInvestments.push({
+            id: uuidv4(),
+            description: this.invest.description,
+            price: this.invest.price
+          })
+          this.invest = {description: '', price: 0}
+          this.errors.clear()
+        }
+      })
     }
   }
+}
 </script>

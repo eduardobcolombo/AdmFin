@@ -90,61 +90,61 @@
 </template>
 
 <script>
-  const uuidv4 = require('uuid/v4')
+const uuidv4 = require('uuid/v4')
 
-  export default {
-    name: 'app-fixedExpenses',
-    $validates: true,
-    data: () => ({
-      selected: [],
-      headers: [
-        {
-          text: 'label.description',
-          align: 'left',
-          sortable: false,
-          value: 'description'
-        },
-        {
-          text: 'label.value',
-          sortable: false,
-          value: 'price'
-        }
-      ],
-      fixedExpense: {description: '', price: 0},
-      listFixedExpenses: []
-    }),
-    computed: {
-      total () {
-        const value = this.listFixedExpenses.reduce((sum, o) => sum + o.price, 0)
-        this.$emit('total_fixedExpenses_change', value)
-
-        return value
+export default {
+  name: 'app-fixed-expenses',
+  $validates: true,
+  data: () => ({
+    selected: [],
+    headers: [
+      {
+        text: 'label.description',
+        align: 'left',
+        sortable: false,
+        value: 'description'
+      },
+      {
+        text: 'label.value',
+        sortable: false,
+        value: 'price'
       }
+    ],
+    fixedExpense: {description: '', price: 0},
+    listFixedExpenses: []
+  }),
+  computed: {
+    total () {
+      const value = this.listFixedExpenses.reduce((sum, o) => sum + o.price, 0)
+      this.$emit('total_fixedExpenses_change', value)
+
+      return value
+    }
+  },
+  methods: {
+    remove () {
+      const ids = this.selected.map((o) => o.id)
+      this.listFixedExpenses = this.listFixedExpenses.filter((o) => !ids.includes(o.id))
     },
-    methods: {
-      remove () {
-        const ids = this.selected.map((o) => o.id)
-        this.listFixedExpenses = this.listFixedExpenses.filter((o) => !ids.includes(o.id))
-      },
 
-      toggleAll () {
-        if (this.selected.length) this.selected = []
-        else this.selected = this.listFixedExpenses.slice()
-      },
+    toggleAll () {
+      if (this.selected.length) this.selected = []
+      else this.selected = this.listFixedExpenses.slice()
+    },
 
-      validateBeforeSubmit () {
-        this.$validator.validateAll().then((result) => {
-          if (result) {
-            this.listFixedExpenses.push({
-              id: uuidv4(),
-              description: this.fixedExpense.description,
-              price: this.fixedExpense.price
-            })
-            this.fixedExpense = {description: '', price: 0}
-            this.errors.clear()
-          }
-        })
-      }
+    validateBeforeSubmit () {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.listFixedExpenses.push({
+            id: uuidv4(),
+            description: this.fixedExpense.description,
+            price: this.fixedExpense.price
+          })
+          this.fixedExpense = {description: '', price: 0}
+          this.errors.clear()
+        }
+      })
     }
   }
+}
 </script>

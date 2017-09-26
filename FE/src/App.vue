@@ -40,7 +40,7 @@
                   {{ $t('steps.fixed_expenses') }}
                 </v-stepper-step>
                 <v-stepper-content step="2">
-                  <app-fixedExpenses @total_fixedExpenses_change="total.fixedExpenses = $event"></app-fixedExpenses>
+                  <app-fixed-expenses @total_fixedExpenses_change="total.fixedExpenses = $event"></app-fixed-expenses>
                   <v-layout row wrap>
                     <v-flex sm6>
                       <v-btn flat @click.native="step = 1">{{ $t('previous') }}</v-btn>
@@ -54,7 +54,7 @@
                   {{ $t('steps.monthly_income') }}
                 </v-stepper-step>
                 <v-stepper-content step="3">
-                  <app-monthlyIncome @total_monthlyCost_change="total.monthlyCost = $event" @total_monthlyIncome_change="total.monthlyIncome = $event"></app-monthlyIncome>
+                  <app-monthly-income @total_monthlyCost_change="total.monthlyCost = $event" @total_monthlyIncome_change="total.monthlyIncome = $event"></app-monthly-income>
                   <v-layout row wrap>
                     <v-flex sm6>
                       <v-btn flat @click.native="step = 2">{{ $t('previous') }}</v-btn>
@@ -68,7 +68,7 @@
                   {{ $t('steps.acquisition_cost') }}
                 </v-stepper-step>
                 <v-stepper-content step="4">
-                  <app-acquisitionCost @total_acquisitionCost_change="total.acquisitionCost = $event"></app-acquisitionCost>
+                  <app-acquisition-cost @total_acquisitionCost_change="total.acquisitionCost = $event"></app-acquisition-cost>
                   <v-layout row wrap>
                     <v-flex sm6>
                       <v-btn flat @click.native="step = 3">{{ $t('previous') }}</v-btn>
@@ -103,41 +103,41 @@
 </style>
 
 <script>
-  export default {
-    name: 'app',
-    data: () => ({
-      availableLocales: [
-        'en',
-        'pt-BR'
-      ],
-      locale: window.navigator.language || 'en',
-      step: 1,
-      total: {
-        investments: 0,
-        fixedExpenses: 0,
-        monthlyCost: 0,
-        monthlyIncome: 0,
-        acquisitionCost: 0
+export default {
+  name: 'app',
+  data: () => ({
+    availableLocales: [
+      'en',
+      'pt-BR'
+    ],
+    locale: window.navigator.language || 'en',
+    step: 1,
+    total: {
+      investments: 0,
+      fixedExpenses: 0,
+      monthlyCost: 0,
+      monthlyIncome: 0,
+      acquisitionCost: 0
+    }
+  }),
+  watch: {
+    locale (val) {
+      this.$i18n.locale = val
+    }
+  },
+  methods: {
+    getIso (locale) {
+      const iso = {
+        'en': 'us',
+        'pt-BR': 'br'
       }
-    }),
-    watch: {
-      locale (val) {
-        this.$i18n.locale = val
-      }
-    },
-    methods: {
-      getIso (locale) {
-        const iso = {
-          'en': 'us',
-          'pt-BR': 'br'
-        }
 
-        return iso[locale]
-      },
-      setLocale (val) {
-        this.locale = val
-        this.$validator.setLocale(val.replace('-', '_'))
-      }
+      return iso[locale]
+    },
+    setLocale (val) {
+      this.locale = val
+      this.$validator.setLocale(val.replace('-', '_'))
     }
   }
+}
 </script>
