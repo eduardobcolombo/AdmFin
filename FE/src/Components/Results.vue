@@ -138,10 +138,8 @@ export default {
     }
   },
   methods: {
-    safeDivision (a, b) {
-      const r = a / b
-
-      return isFinite(r) && typeof r === 'number' ? r : 0
+    safeDivision (a) {
+      return isFinite(a) && typeof a === 'number' ? a : 0
     }
   }
 }
