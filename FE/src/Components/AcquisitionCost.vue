@@ -77,11 +77,11 @@
           ></v-checkbox>
         </td>
         <td>{{ props.item.description }}</td>
-        <td class="text-xs-right">{{ $n((props.item.incidence/100), 'percent') }}</td>
+        <td class="text-xs-right">{{ $n(props.item.incidence / 100, 'percent') }}</td>
       </template>
       <template slot="footer">
         <td class="grey lighten-4 text-xs-right pl-4 pr-4" colspan="100%">
-          <strong>{{ $t('table.footer.total_of_acquisition_cost') }} {{ $n((total/100), 'percent') }}</strong>
+          <strong>{{ $t('table.footer.total_of_acquisition_cost') }} {{ $n(total / 100, 'percent') }}</strong>
         </td>
       </template>
     </v-data-table>
