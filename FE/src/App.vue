@@ -110,7 +110,7 @@ export default {
       'en',
       'pt-BR'
     ],
-    locale: window.navigator.language || 'en',
+    locale: window.navigator.language || 'pt-BR',
     step: 1,
     total: {
       investments: 0,

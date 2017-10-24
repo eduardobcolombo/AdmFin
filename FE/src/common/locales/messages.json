@@ -27,7 +27,20 @@
         "total_of_monthly_cost": "Total of monthly cost",
         "total_of_monthly_income": "Total of monthly income",
         "total_of_acquisition_cost": "Total of acquisition cost"
-      }
+      },
+        "label": {
+          "float_cost": "Float cost",
+          "cost_of_products": "Cost of products",
+          "acquisition_cost": "Acquisition cost",
+          "contribuition_margin": "Contribuition margin",
+          "fixed_expenses": "Fixed expenses",
+          "operational_result":"Operational result",
+          "net_profit":"Net profit",
+          "break_even_point":"Break-even point",
+          "sales_profitability":"Sales Profitability",
+          "project_profitability":"Project profitability",
+          "return_of_investment":"Return of investments (number of months)"
+        }
     }
   },
   "pt-BR": {
@@ -35,7 +48,7 @@
     "steps": {
       "investments": "Investimentos",
       "fixed_expenses": "Despesas fixas",
-      "monthly_income": "Renda mensal",
+      "monthly_income": "Venda mensal",
       "acquisition_cost": "Custo de aquisição",
       "results": "Resultados"
     },
@@ -58,7 +71,20 @@
         "total_of_monthly_cost": "Total do custo mensal",
         "total_of_monthly_income": "Total da renda mensal",
         "total_of_acquisition_cost": "Total do custo de aquisição"
-      }
+      },
+        "label": {
+          "float_cost": "Custos variáveis",
+          "cost_of_products": "Custo dos produtos",
+          "acquisition_cost": "Custo de aquisição",
+          "contribuition_margin": "Margem de contribuição",
+          "fixed_expenses": "Despesas fixas",
+          "operational_result":"Resultado Operacional",
+          "net_profit":"Lucro líquido",
+          "break_even_point":"Ponto de equilíbrio",
+          "sales_profitability":"Lucratividade das vendas",
+          "project_profitability":"Rentabilidade do projeto",
+          "return_of_investment":"Prazo de retorno do investimento (n° meses)"
+      }      
     }
   }
 }
