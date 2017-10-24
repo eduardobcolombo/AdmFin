@@ -115,8 +115,8 @@ export default {
       let values = {
         investments: this.total.investments,
         monthlyIncome: this.total.monthlyIncome,
-        percentAcquisitionCost: (this.total.acquisitionCost / 100),
-        acquisitionCost: this.total.monthlyIncome * (this.total.acquisitionCost / 100),
+        percentAcquisitionCost: this.safeDivision(this.total.acquisitionCost / 100),
+        acquisitionCost: this.total.monthlyIncome * this.safeDivision(this.total.acquisitionCost / 100),
         costProducts: this.total.monthlyCost,
         fixedExpenses: this.total.fixedExpenses
       }
