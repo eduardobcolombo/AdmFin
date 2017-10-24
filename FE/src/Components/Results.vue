@@ -60,7 +60,7 @@
           </li>
           <li>
             Ponto de equilíbrio
-            <strong class="right">{{ $n(economicIndex.breakEvenPoint, 'currency') }}</strong>
+            <strong class="right">{{ $n(economicIndex.breakEvenPoint, 'percent') }}</strong>
           </li>
           <li>
             Rentabilidade do projeto (a.m.)
@@ -115,7 +115,7 @@ export default {
       let values = {
         investments: this.total.investments,
         monthlyIncome: this.total.monthlyIncome,
-        percentAcquisitionCost: this.total.acquisitionCost,
+        percentAcquisitionCost: (this.total.acquisitionCost / 100),
         acquisitionCost: this.total.monthlyIncome * (this.total.acquisitionCost / 100),
         costProducts: this.total.monthlyCost,
         fixedExpenses: this.total.fixedExpenses
