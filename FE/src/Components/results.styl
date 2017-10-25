@@ -39,6 +39,8 @@ li
     margin-top: 6px
   ol.results
     counter-reset: nested-ol-li
-    > li:before
-      content: counter(li) "." counter(nested-ol-li)
-      counter-increment: nested-ol-li
+    > li
+      margin-right: -8px
+      &:before
+        content: counter(li) "." counter(nested-ol-li)
+        counter-increment: nested-ol-li
